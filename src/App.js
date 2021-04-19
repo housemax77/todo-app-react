@@ -9,11 +9,11 @@ export function App() {
         <input aria-label="To Do Time" type="time" id="time" />
         <input id="to-do-submit-button" type="submit" value="Add To Do" />
       </form>
-      <div class="dropdown">
-        <button class="dropbtn">Dropdown</button>
+      <div className="dropdown">
+        <button className="dropbtn">Dropdown</button>
         <div
           aria-label="Sort By Time Or To Do Dropdown"
-          class="dropdown-content"
+          className="dropdown-content"
         >
           <a
             aria-label="Sort By Time"
