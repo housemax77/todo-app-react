@@ -86,7 +86,11 @@ export function App() {
         onkeyup="toDoSort()"
       />
       <div id="sortBy">Not Sorting</div>
-      <ol id="List"></ol>
+      <ol id="List">
+        {toDos.map((toDo) => {
+          return <li>{renderToDo(toDo)}</li>;
+        })}
+      </ol>
     </>
   );
 }
