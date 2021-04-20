@@ -1,4 +1,14 @@
+import React, { useState } from "react";
+
 export function App() {
+  // the todo input
+  const [toDo, setToDo] = useState("");
+  // the time input
+  const [time, setTime] = useState("");
+  // the list of todos already entered
+  const [toDos, setToDos] = useState([]);
+  //setCount is a function that is setting the variable count which is by default 0
+
   return (
     <>
       <h1 aria-label="Page Heading" id="heading">
