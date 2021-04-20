@@ -9,6 +9,43 @@ export function App() {
   const [toDos, setToDos] = useState([]);
   //setCount is a function that is setting the variable count which is by default 0
 
+  function renderToDo(toDo) {
+    if (!toDo.editing)
+      return (
+        <div
+          onClick={(event) => {
+            debugger;
+            const toDosCopy = [...toDos]; // copy array using array destructuring
+            toDosCopy.forEach((element, index) => {
+              if (element.toDo === toDo.toDo) {
+                element.editing = true;
+                return;
+              }
+            });
+            setToDos(toDosCopy);
+          }}
+        >
+          {toDo.toDo + " at " + toDo.time}
+        </div>
+      );
+    return (
+      <>
+        <input
+          type="text"
+          aria-label={`Enter New Text For ${toDo.toDo} Here`}
+          value={toDo.toDo}
+        />
+        at
+        <input
+          type="time"
+          aria-label={`Enter New Time For ${toDo.time} Here`}
+          value={toDo.time}
+        />
+        <button type="submit"> Save Changes </button>
+      </>
+    );
+  }
+
   return (
     <>
       <h1 aria-label="Page Heading" id="heading">
