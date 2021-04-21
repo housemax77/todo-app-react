@@ -51,9 +51,25 @@ export function App() {
       <h1 aria-label="Page Heading" id="heading">
         To Do List
       </h1>
-      <form id="form">
-        <input placeholder="To Do" id="toDo" />
-        <input aria-label="To Do Time" type="time" id="time" />
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          setToDos([{ toDo: toDo, time: time, done: false, editing: false }]);
+        }}
+      >
+        <input
+          placeholder="To Do"
+          value={toDo}
+          onChange={(event) => setToDo(event.target.value)}
+          id="toDo"
+        />
+        <input
+          aria-label="To Do Time"
+          type="time"
+          value={time}
+          onChange={(event) => setTime(event.target.value)}
+          id="time"
+        />
         <input id="to-do-submit-button" type="submit" value="Add To Do" />
       </form>
       <div className="dropdown">
