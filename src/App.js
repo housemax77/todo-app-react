@@ -14,7 +14,6 @@ export function App() {
       return (
         <div
           onClick={(event) => {
-            debugger;
             const toDosCopy = [...toDos]; // copy array using array destructuring
             toDosCopy.forEach((element, index) => {
               if (element.toDo === toDo.toDo) {
@@ -30,18 +29,50 @@ export function App() {
       );
     return (
       <>
-        <input
-          type="text"
-          aria-label={`Enter New Text For ${toDo.toDo} Here`}
-          value={toDo.toDo}
-        />
-        at
-        <input
-          type="time"
-          aria-label={`Enter New Time For ${toDo.time} Here`}
-          value={toDo.time}
-        />
-        <button type="submit"> Save Changes </button>
+        <div>
+          <input
+            type="text"
+            onChange={(event) => {
+              const toDosCopy = [...toDos];
+              toDosCopy.forEach((element, index) => {
+                toDosCopy[index].toDo = event.target.value;
+              });
+              setToDos(toDosCopy);
+            }}
+            aria-label={`Enter New Text For ${toDo.toDo} Here`}
+            value={toDo.toDo}
+          />
+          at
+          <input
+            type="time"
+            onChange={(event) => {
+              const toDosCopy = [...toDos]; // copy array using array destructuring
+              toDosCopy.forEach((element, index) => {
+                toDosCopy[index].time = event.target.value;
+              });
+              setToDos(toDosCopy);
+            }}
+            aria-label={`Enter New Time For ${toDo.time} Here`}
+            value={toDo.time}
+          />
+          <button
+            onClick={(event) => {
+              const toDosCopy = [...toDos]; // copy array using array destructuring
+              toDosCopy.forEach((element, index) => {
+                element.editing = false;
+                if (element.toDo !== toDo.toDo || element.time !== toDo.time) {
+                  toDosCopy.toDo = toDo.toDo;
+                  toDosCopy.time = toDo.time;
+                }
+              });
+              setToDos(toDosCopy);
+            }}
+            type="submit"
+          >
+            {" "}
+            Save Changes{" "}
+          </button>
+        </div>
       </>
     );
   }
