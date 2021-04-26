@@ -6,11 +6,6 @@ h1 {
   text-align: center;
 }
 
-#toDoInput {
-  color: aqua;
-  background-color: black;
-}
-
 .checked {
   text-decoration-line: line-through;
   color: gray;
@@ -64,7 +59,7 @@ h1 {
   background-color: #3e8e41;
 }
 
-#sortBy {
+.sort-text {
   font-size: large;
   margin-left: 20px;
 }
@@ -73,24 +68,24 @@ h1 {
   background-color: red;
 }
 
-#toDo {
+.toDo {
   padding: 5px;
   margin: 0px 33px 40px 20px;
 }
 
-#searchToDo {
+.search {
   margin-left: 107px;
 }
 
-#time {
+.time {
   padding: 5px;
 }
 
-#to-do-submit-button {
+.submit-toDo {
   font-size: 15px;
   padding: 3px;
 }
 
-#list {
+.list {
   margin-left: 20px;
 }
