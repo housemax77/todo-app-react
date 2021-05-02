@@ -58,15 +58,19 @@ context("To do app", () => {
     cy.wait(150);
     cy.findByRole("button", { name: "Save Changes" }).click();
     cy.findByText("Blahhhh at 17:29").should("exist");
+    //Making sure editing toDo doesn't affect other toDo
+    cy.findByText("Blah at 17:30").should("exist");
   });
 
   it("should support editing times", () => {
     addToDos();
-    cy.findByText("17:29").click();
+    cy.findByText("Blahhh at 17:29").click();
     cy.findByLabelText("Enter New Time For 17:29 Here").type("17:22");
     cy.wait(150);
     cy.findByRole("button", { name: "Save Changes" }).click();
-    cy.findByText("17:22").should("exist");
+    cy.findByText("Blahhh at 17:22").should("exist");
+    //Making sure editing time doesn't affect other toDo
+    cy.findByText("Blah at 17:30").should("exist");
   });
 
   it("should support searching todos", () => {

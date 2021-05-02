@@ -9,39 +9,89 @@ export function App() {
   const [toDos, setToDos] = useState([]);
   //setCount is a function that is setting the variable count which is by default 0
 
-  function createCheckBox() {
-    return <input type="checkBox" aria-label={`Did you ${toDo}?`}></input>;
+  function createCheckBox(toDo, index) {
+    debugger;
+    return (
+      <input
+        type="checkBox"
+        id={"checkBox-" + index}
+        aria-label={`Did you ${toDo}?`}
+        onClick={(event) => {
+          debugger;
+          const updatedToDos = toDos.map((toDo, index) => {
+            // use id to determine which toDo to edit event.target.id
+            const splitId = event.target.id.split("-");
+            const indexToString = index.toString();
+            if (splitId[1] === indexToString) {
+              debugger;
+              const toDoCopy = { ...toDo };
+              if (toDoCopy.done === true) {
+                toDoCopy.done = false;
+              } else {
+                toDoCopy.done = true;
+              }
+              return toDoCopy;
+            } else {
+              return toDo;
+            }
+          });
+          debugger;
+          setToDos(updatedToDos);
+        }}
+      ></input>
+    );
   }
 
-  function renderToDo(toDo) {
-    if (!toDo.editing)
-      return (
-        <div
-          onClick={(event) => {
-            const toDosCopy = [...toDos]; // copy array using array destructuring
-            toDosCopy.forEach((element, index) => {
-              if (element.toDo === toDo.toDo) {
-                element.editing = true;
-                return;
-              }
-            });
-            setToDos(toDosCopy);
-          }}
-        >
-          {toDo.toDo + " at " + toDo.time}
-        </div>
-      );
+  function renderToDo(toDo, index) {
+    if (!toDo.editing) {
+      if (toDo.done) {
+        <div className="checked">
+          {
+            toDo.toDo + " at " + toDo.time
+            // + createCheckBox(toDo, index)
+          }{" "}
+        </div>;
+      } else {
+        return (
+          <div
+            onClick={(event) => {
+              const toDosCopy = [...toDos]; // copy array using array destructuring
+              toDosCopy.forEach((element, index) => {
+                if (element.toDo === toDo.toDo) {
+                  element.editing = true;
+                  return;
+                }
+              });
+              setToDos(toDosCopy);
+              debugger;
+            }}
+          >
+            {toDo.toDo + " at " + toDo.time}
+          </div>
+          // createCheckBox(toDo, index)
+        );
+      }
+    }
     return (
       <>
         <div>
           <input
             type="text"
+            id={"toDo-Input-" + index}
             onChange={(event) => {
-              const toDosCopy = [...toDos];
-              toDosCopy.forEach((element, index) => {
-                toDosCopy[index].toDo = event.target.value;
+              const updatedToDos = toDos.map((toDo, index) => {
+                // use id to determine which toDo to edit event.target.id
+                const splitId = event.target.id.split("-");
+                const indexToString = index.toString();
+                if (splitId[2] === indexToString) {
+                  const toDoCopy = { ...toDo };
+                  toDoCopy.toDo = event.target.value;
+                  return toDoCopy;
+                } else {
+                  return toDo;
+                }
               });
-              setToDos(toDosCopy);
+              setToDos(updatedToDos);
             }}
             aria-label={`Enter New Text For ${toDo.toDo} Here`}
             value={toDo.toDo}
@@ -49,12 +99,23 @@ export function App() {
           at
           <input
             type="time"
+            id={"time-Input-" + index}
             onChange={(event) => {
-              const toDosCopy = [...toDos]; // copy array using array destructuring
-              toDosCopy.forEach((element, index) => {
-                toDosCopy[index].time = event.target.value;
+              const updatedToDos = toDos.map((time, index) => {
+                // use id to determine which toDo to edit event.target.id
+                const splitId = event.target.id.split("-");
+                const indexToString = index.toString();
+                debugger;
+                if (splitId[2] === indexToString) {
+                  debugger;
+                  const timeCopy = { ...time };
+                  timeCopy.time = event.target.value;
+                  return timeCopy;
+                } else {
+                  return time;
+                }
               });
-              setToDos(toDosCopy);
+              setToDos(updatedToDos);
             }}
             aria-label={`Enter New Time For ${toDo.time} Here`}
             value={toDo.time}
@@ -77,6 +138,7 @@ export function App() {
             Save Changes{" "}
           </button>
         </div>
+        {createCheckBox(toDo, index)}
       </>
     );
   }
@@ -87,7 +149,10 @@ export function App() {
       <form
         onSubmit={(event) => {
           event.preventDefault();
-          setToDos([{ toDo: toDo, time: time, done: false, editing: false }]);
+          setToDos([
+            ...toDos,
+            { toDo: toDo, time: time, done: false, editing: false },
+          ]);
           setToDo("");
           setTime("");
         }}
@@ -113,10 +178,10 @@ export function App() {
           aria-label="Sort By Time Or To Do Dropdown"
           className="dropdown-content"
         >
-          <a aria-label="Sort By Time" onclick="callSortTimes()">
+          <a aria-label="Sort By Time" onClick="callSortTimes()">
             Sort By Time
           </a>
-          <a aria-label="Sort Alphabeticlly" onclick="callSortTimes()">
+          <a aria-label="Sort Alphabeticlly" onClick="callSortTimes()">
             Sort Alphabeticlly
           </a>
         </div>
@@ -130,8 +195,8 @@ export function App() {
       />
       <div class="sort-text">Not Sorting</div>
       <ol class="List">
-        {toDos.map((toDo) => {
-          return <li>{renderToDo(toDo)}</li>;
+        {toDos.map((toDo, index) => {
+          return <li>{renderToDo(toDo, index)}</li>;
         })}
       </ol>
     </>
