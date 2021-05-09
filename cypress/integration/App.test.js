@@ -22,38 +22,36 @@ context("To do app", () => {
   it("should support sorting by time", () => {
     addToDos();
     cy.findByLabelText("Sort By Time").click({ force: true });
-    cy.findByLabelText("Did you Blahhh?").should("exist");
+    cy.findByLabelText("Check Blahhh At Index 0 As Done").should("exist");
   });
 
   it("should support sorting alphabetically", () => {
     addToDo("Bla", "17:20");
     cy.findByLabelText("Sort Alphabeticlly").click({ force: true });
-    cy.findByLabelText("Did you Bla?").should("exist");
+    cy.findByLabelText("Bla Li Index 0").should("exist");
   });
 
-  it.only("should support deleting todo", () => {
+  it("should support deleting todo", () => {
     addToDos();
-    addToDo("Bla", "17:12");
-    cy.findByLabelText("Delete Bla To Do?").click();
+    cy.findByLabelText("Delete Blahhh To Do").click();
     cy.on("window:confirm", () => true);
-    cy.findByLabelText("Did you Blahhh?").should("exist");
-    cy.findByLabelText("Did you Bla?").should("not.exist");
+    cy.findByLabelText("Blahhh Li Index 1").should("not.exist");
   });
 
   it("should support cancelling deleting todo", () => {
     addToDos();
-    cy.findByLabelText("Delete Blahhh To Do?").click();
+    cy.findByLabelText("Delete Blahhh To Do").click();
     cy.on("window:confirm", () => false);
-    cy.findByLabelText("Did you Blahhh?").should("exist");
+    cy.findByLabelText("Blahhh Li Index 1").should("exist");
   });
 
   it("should support marking as done", () => {
     addToDos();
-    cy.findByLabelText("Did you Blahhh?").click();
+    cy.findByLabelText("Check Blahhh At Index 1 As Done").click();
     cy.findByLabelText("To Do and time text 1").should("have.class", "checked");
   });
 
-  it("should support editing todos", () => {
+  it.only("should support editing todos", () => {
     addToDos();
     cy.findByText("Blahhh at 17:29").click();
     cy.findByLabelText("Enter New Text For Blahhh Here").type("h");
@@ -79,7 +77,9 @@ context("To do app", () => {
     addToDos();
     cy.findByLabelText("Text To Search To Do").type("Blahhh");
     expect(
-      cy.findByLabelText("Text To Search To Do".valueOf("Did you Blahhh?".text))
+      cy.findByLabelText(
+        "Text To Search To Do".valueOf("Blahhh Li Index 1".text)
+      )
     );
   });
 
@@ -94,7 +94,7 @@ context("To do app", () => {
   it("should support sorting then editing toDos", () => {
     addToDos();
     cy.findByLabelText("Sort By Time").click({ force: true });
-    cy.findByLabelText("Did you Blahhh?").should("exist");
+    cy.findByLabelText("Check Blahhh At Index 0 As Done").should("exist");
     cy.findByText("Blahhh").click();
     cy.findByLabelText("Enter New Text For Blahhh Here").type("h");
     cy.wait(150);
