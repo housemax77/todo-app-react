@@ -55,7 +55,7 @@ export function App() {
         return (
           <div
             onClick={(event) => {
-              const toDosCopy = [...toDos]; // copy array using array destructuring
+              const toDosCopy = [...toDos];
               toDosCopy.forEach((element, index) => {
                 if (element.toDo === toDo.toDo) {
                   element.editing = true;
@@ -63,7 +63,6 @@ export function App() {
                 }
               });
               setToDos(toDosCopy);
-              debugger;
             }}
           >
             {toDo.toDo + " at " + toDo.time}
@@ -80,7 +79,6 @@ export function App() {
             id={"toDo-Input-" + index}
             onChange={(event) => {
               const updatedToDos = toDos.map((toDo, index) => {
-                // use id to determine which toDo to edit event.target.id
                 const splitId = event.target.id.split("-");
                 const indexToString = index.toString();
                 if (splitId[2] === indexToString) {
@@ -102,7 +100,6 @@ export function App() {
             id={"time-Input-" + index}
             onChange={(event) => {
               const updatedToDos = toDos.map((time, index) => {
-                // use id to determine which toDo to edit event.target.id
                 const splitId = event.target.id.split("-");
                 const indexToString = index.toString();
                 debugger;
@@ -122,7 +119,7 @@ export function App() {
           />
           <button
             onClick={(event) => {
-              const toDosCopy = [...toDos]; // copy array using array destructuring
+              const toDosCopy = [...toDos];
               toDosCopy.forEach((element, index) => {
                 element.editing = false;
                 if (element.toDo !== toDo.toDo || element.time !== toDo.time) {
