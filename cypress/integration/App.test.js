@@ -28,7 +28,7 @@ context("To do app", () => {
   it("should support sorting alphabetically", () => {
     addToDo("Bla", "17:20");
     cy.findByLabelText("Sort Alphabeticlly").click({ force: true });
-    cy.findByLabelText("Bla Li Index 0").should("exist");
+    cy.findByLabelText("Did you Bla?").should("exist");
   });
 
   it.only("should support deleting todo", () => {
@@ -36,15 +36,15 @@ context("To do app", () => {
     addToDo("Bla", "17:12");
     cy.findByLabelText("Delete Bla To Do?").click();
     cy.on("window:confirm", () => true);
-    cy.findByLabelText("Blahhh Li Index 1").should("not.exist");
-    cy.findByLabelText("Bla Li Index 2").should("not.exist");
+    cy.findByLabelText("Did you Blahhh?").should("exist");
+    cy.findByLabelText("Did you Bla?").should("not.exist");
   });
 
   it("should support cancelling deleting todo", () => {
     addToDos();
     cy.findByLabelText("Delete Blahhh To Do?").click();
     cy.on("window:confirm", () => false);
-    cy.findByLabelText("Blahhh Li Index 1").should("exist");
+    cy.findByLabelText("Did you Blahhh?").should("exist");
   });
 
   it("should support marking as done", () => {
@@ -79,9 +79,7 @@ context("To do app", () => {
     addToDos();
     cy.findByLabelText("Text To Search To Do").type("Blahhh");
     expect(
-      cy.findByLabelText(
-        "Text To Search To Do".valueOf("Blahhh Li Index 1".text)
-      )
+      cy.findByLabelText("Text To Search To Do".valueOf("Did you Blahhh?".text))
     );
   });
 
