@@ -40,15 +40,10 @@ export function App() {
         id={"submitButton-" + indexForId}
         aria-label={`Delete ${toDo.toDo} To Do?`}
         onClick={(event) => {
-          // const updatedToDos = toDos.map((toDo, index) => {
-          //   const toDoIndex = event.target.id.split("-")[1];
-          //   if (toDoIndex === index.toString()) {
-          //     var toDoCopy = { ...toDos }.splice(index, 1);
-          //     return toDoCopy;
-          //   } else {
-          //     return toDo;
-          //   }
-          // });
+          const userConfirmedDelete = window.confirm(
+            "Do you want to delete " + toDo.toDo + "?"
+          );
+          if (!userConfirmedDelete) return false;
           const filteredToDos = toDos.filter(
             (element, index) => index !== indexForId
           );
