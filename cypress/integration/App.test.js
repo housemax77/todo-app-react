@@ -75,12 +75,14 @@ context("To do app", () => {
     cy.findByText("Blah at 17:30").should("exist");
   });
 
-  it("should support searching todos", () => {
+  it.only("should support searching todos", () => {
     addToDos();
-    cy.findByLabelText("Text To Search To Do").type("Blahhh");
+    cy.findByLabelText("Text To Search To Do").type("B");
     expect(
       cy.findByLabelText("Text To Search To Do".valueOf("Did you Blahhh?".text))
     );
+    addToDo("UwU", "17:42");
+    cy.findByText("UwU").should("have.class", "hidden");
   });
 
   it("should support saving changes on page reload", () => {

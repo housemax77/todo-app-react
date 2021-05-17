@@ -15,7 +15,7 @@ export function App() {
   const filteredToDos = toDos.filter((toDo) => {
     const includesSearchContent = toDo.toDo
       .toLowerCase()
-      .includes(searchContent);
+      .includes(searchContent.toLowerCase());
     return includesSearchContent;
   });
 
