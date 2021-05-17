@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { Header } from "./Header";
+import { ToDoList } from "./ToDoList";
+// import { CreateToDo } from "./CreateToDo";
 
 export function App() {
   // the todo input
@@ -7,12 +10,17 @@ export function App() {
   const [time, setTime] = useState("");
   // the list of todos already entered
   const [toDos, setToDos] = useState([]);
+  const [searchContent, setSearchContent] = useState("");
 
+  const filteredToDos = toDos.filter((toDo) => {
+    const includesSearchContent = toDo.toDo
+      .toLowerCase()
+      .includes(searchContent);
     return includesSearchContent;
-          });
+  });
 
-      return (
-        <>
+  return (
+    <>
       <Header />
       <form
         onSubmit={(event) => {
@@ -40,6 +48,8 @@ export function App() {
         />
         <input className="submit-toDo" type="submit" value="Add To Do" />
       </form>
+
+      {/* <CreateToDo setToDos={setToDos} /> */}
       <div className="dropdown">
         <button className="dropbtn">Dropdown</button>
         <div
@@ -56,10 +66,10 @@ export function App() {
       </div>
       <input
         aria-label="Text To Search To Do"
-        type="text"
+        type="search"
         className="search"
         placeholder="🔍 Search"
-        // onKeyUp="toDoSort()"
+        onChange={(event) => setSearchContent(event.target.value)}
       />
       <div className="sort-text">Not Sorting</div>
       <ToDoList toDos={filteredToDos} setToDos={setToDos} />
