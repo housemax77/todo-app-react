@@ -51,6 +51,7 @@ context("To do app", () => {
     addToDos();
     cy.findByLabelText("Did you Blahhh?").click();
     cy.findByLabelText("To Do and time text 1").should("have.class", "checked");
+    cy.findByLabelText("Did you Blahhh?").click();
   });
 
   it("should support editing todos", () => {
@@ -77,10 +78,12 @@ context("To do app", () => {
 
   it("should support searching todos", () => {
     addToDos();
-    cy.findByLabelText("Text To Search To Do").type("Blahhh");
+    cy.findByLabelText("Text To Search To Do").type("B");
     expect(
       cy.findByLabelText("Text To Search To Do".valueOf("Did you Blahhh?".text))
     );
+    addToDo("UwU", "17:42");
+    cy.findByText("UwU").should("not.exist");
   });
 
   it("should support saving changes on page reload", () => {
