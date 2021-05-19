@@ -4,23 +4,58 @@ export function ToDoList(props) {
   const toDos = props.toDos;
   const setToDos = props.setToDos;
 
-  function createCheckBox(toDo, index) {
+  function createCheckedCheckBox(toDo, index) {
     return (
       <input
+        checked
         type="checkBox"
         id={"checkBox-" + index}
         aria-label={`Did you ${toDo.toDo}?`}
-        onClick={(event) => {
+        onChange={(event) => {
           const updatedToDos = toDos.map((toDo, index) => {
             const toDoIndex = event.target.id.split("-")[1];
             if (toDoIndex === index.toString()) {
-              toDo.done = !toDo.done;
+              const toDoCopy = { ...toDo };
+              toDoCopy.done = !toDoCopy.done;
+              return toDoCopy;
+            } else {
               return toDo;
             }
           });
           setToDos(updatedToDos);
         }}
-      ></input>
+      />
+    );
+  }
+
+  function createCheckBox(toDo, index) {
+    if (toDo.done === true) {
+      return createCheckedCheckBox(toDo, index);
+    } else {
+      return createUnCheckedCheckBox(toDo, index);
+    }
+  }
+
+  function createUnCheckedCheckBox(toDo, index) {
+    return (
+      <input
+        type="checkBox"
+        id={"checkBox-" + index}
+        aria-label={`Did you ${toDo.toDo}?`}
+        onChange={(event) => {
+          const updatedToDos = toDos.map((toDo, index) => {
+            const toDoIndex = event.target.id.split("-")[1];
+            if (toDoIndex === index.toString()) {
+              const toDoCopy = { ...toDo };
+              toDoCopy.done = !toDoCopy.done;
+              return toDoCopy;
+            } else {
+              return toDo;
+            }
+          });
+          setToDos(updatedToDos);
+        }}
+      />
     );
   }
 
@@ -52,7 +87,7 @@ export function ToDoList(props) {
       return null;
     }
     if (!toDo.editing && toDo.done) {
-      createDoneToDo(toDo, index);
+      return createDoneToDo(toDo, index);
     } else if (!toDo.editing) {
       return (
         <div>
