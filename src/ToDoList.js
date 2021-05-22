@@ -201,7 +201,7 @@ export function ToDoList(props) {
   }
   return (
     <ol className="List">
-      {props.toDos.map((toDo, index) => {
+      {toDos.map((toDo, index) => {
         return <li key={toDo.toDo}>{renderToDo(toDo, index)}</li>;
       })}
     </ol>
