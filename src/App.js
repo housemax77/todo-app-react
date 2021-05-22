@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Header } from "./Header";
 import { ToDoList } from "./ToDoList";
 // import { CreateToDo } from "./CreateToDo";
+import { ToolBar } from "./ToolBar";
 
 export function App() {
   // the todo input
