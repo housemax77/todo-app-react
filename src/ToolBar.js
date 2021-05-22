@@ -51,7 +51,7 @@ export function ToolBar(props) {
                 toDo.toDo = listOfToDos[index];
               });
               props.setToDos(toDosCopy);
-              // sort toDos alphabetically using sort/ creating a list of only the toDo attribute
+              setSortingText("Sorting Alphabettically");
             }}
           >
             Sort Alphabeticlly
