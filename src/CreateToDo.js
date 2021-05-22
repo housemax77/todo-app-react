@@ -1,13 +1,9 @@
-// import React, { useState } from "react";
+// import React from "react";
 
 // export function CreateToDo(props) {
-//   // the todo input
-//   const [toDo, setToDo] = useState("");
-//   // the time input
-//   const [time, setTime] = useState("");
-//   // the list of todos already entered
-//   const [toDos, setToDos] = useState([]);
-//   //   const setToDos = props.setToDos;
+//   const setToDo = props.setToDo;
+//   const setToDos = props.setToDos;
+//   const setTime = props.setTime;
 //   return (
 //     <form
 //       onSubmit={(event) => {
