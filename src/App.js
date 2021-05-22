@@ -50,29 +50,17 @@ export function App() {
       </form>
 
       {/* <CreateToDo setToDos={setToDos} /> */}
-      <div className="dropdown">
-        <button className="dropbtn">Dropdown</button>
-        <div
-          aria-label="Sort By Time Or To Do Dropdown"
-          className="dropdown-content"
-        >
-          {/* <a aria-label="Sort By Time" onClick={callSortTimes}>
-            Sort By Time
-          </a>
-          <a aria-label="Sort Alphabeticlly" onClick={callSortTimes}>
-            Sort Alphabeticlly
-          </a> */}
-        </div>
-      </div>
-      <input
-        aria-label="Text To Search To Do"
-        type="search"
-        className="search"
-        placeholder="🔍 Search"
-        onChange={(event) => setSearchContent(event.target.value)}
+      <ToolBar
+        toDos={toDos}
+        setToDos={setToDos}
+        setSearchContent={setSearchContent}
       />
-      <div className="sort-text">Not Sorting</div>
-      <ToDoList toDos={filteredToDos} setToDos={setToDos} />
+      <ToDoList
+        toDos={filteredToDos}
+        setToDo={setToDo}
+        setTime={setTime}
+        setToDos={setToDos}
+      />
     </>
   );
 }
