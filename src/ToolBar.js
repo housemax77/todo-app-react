@@ -47,7 +47,6 @@ export function ToolBar(props) {
               });
               listOfToDos.sort();
               toDosCopy.map((toDo, index) => {
-                debugger;
                 toDo.toDo = listOfToDos[index];
               });
               props.setToDos(toDosCopy);

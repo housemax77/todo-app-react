@@ -98,10 +98,10 @@ context("To do app", () => {
     addToDos();
     cy.findByLabelText("Sort By Time").click({ force: true });
     cy.findByLabelText("Did you Blahhh?").should("exist");
-    cy.findByText("Blahhh").click();
+    cy.findByText("Blahhh at 17:29").click();
     cy.findByLabelText("Enter New Text For Blahhh Here").type("h");
     cy.wait(150);
     cy.findByRole("button", { name: "Save Changes" }).click();
-    cy.findByText("Blahhhh").should("exist");
+    cy.findByText("Blahhhh at 17:29").should("exist");
   });
 });
