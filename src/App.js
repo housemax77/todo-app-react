@@ -12,7 +12,6 @@ export function App() {
   // the list of todos already entered
   const [toDos, setToDos] = useState([]);
   const [searchContent, setSearchContent] = useState("");
-
   const filteredToDos = toDos.filter((toDo) => {
     const includesSearchContent = toDo.toDo
       .toLowerCase()
