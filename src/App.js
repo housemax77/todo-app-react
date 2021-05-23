@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { Header } from "./Header";
 import { ToDoList } from "./ToDoList";
-// import { CreateToDo } from "./CreateToDo";
+import { CreateToDo } from "./CreateToDo";
 import { ToolBar } from "./ToolBar";
 
 export function App() {
-  // the todo input
+  // contents of toDo input
   const [toDo, setToDo] = useState("");
-  // the time input
+  // contents of time input
   const [time, setTime] = useState("");
   // the list of todos already entered
   const [toDos, setToDos] = useState([]);
@@ -23,7 +23,7 @@ export function App() {
   return (
     <>
       <Header />
-      <form
+      {/* <form
         onSubmit={(event) => {
           event.preventDefault();
           setToDos([
@@ -48,9 +48,16 @@ export function App() {
           className="time"
         />
         <input className="submit-toDo" type="submit" value="Add To Do" />
-      </form>
+      </form> */}
 
-      {/* <CreateToDo setToDos={setToDos} /> */}
+      <CreateToDo
+        time={time}
+        setTime={setTime}
+        toDo={toDo}
+        setToDo={setToDo}
+        toDos={toDos}
+        setToDos={setToDos}
+      />
       <ToolBar
         toDos={toDos}
         setToDos={setToDos}
