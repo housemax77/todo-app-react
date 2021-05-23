@@ -1,18 +1,17 @@
 import React, { useState } from "react";
 import { Header } from "./Header";
 import { ToDoList } from "./ToDoList";
-// import { CreateToDo } from "./CreateToDo";
+import { CreateToDo } from "./CreateToDo";
 import { ToolBar } from "./ToolBar";
 
 export function App() {
-  // the todo input
+  // contents of toDo input
   const [toDo, setToDo] = useState("");
-  // the time input
+  // contents of time input
   const [time, setTime] = useState("");
   // the list of todos already entered
   const [toDos, setToDos] = useState([]);
   const [searchContent, setSearchContent] = useState("");
-
   const filteredToDos = toDos.filter((toDo) => {
     const includesSearchContent = toDo.toDo
       .toLowerCase()
@@ -23,34 +22,14 @@ export function App() {
   return (
     <>
       <Header />
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          setToDos([
-            ...toDos,
-            { toDo: toDo, time: time, done: false, editing: false },
-          ]);
-          setToDo("");
-          setTime("");
-        }}
-      >
-        <input
-          placeholder="To Do"
-          value={toDo}
-          onChange={(event) => setToDo(event.target.value)}
-          className="toDo"
-        />
-        <input
-          aria-label="To Do Time"
-          type="time"
-          value={time}
-          onChange={(event) => setTime(event.target.value)}
-          className="time"
-        />
-        <input className="submit-toDo" type="submit" value="Add To Do" />
-      </form>
-
-      {/* <CreateToDo setToDos={setToDos} /> */}
+      <CreateToDo
+        time={time}
+        setTime={setTime}
+        toDo={toDo}
+        setToDo={setToDo}
+        toDos={toDos}
+        setToDos={setToDos}
+      />
       <ToolBar
         toDos={toDos}
         setToDos={setToDos}
