@@ -4,19 +4,20 @@ export function CreateToDo(props) {
   const time = props.time;
   const toDo = props.toDo;
   const setToDo = props.setToDo;
-  const setToDos = props.setToDos;
   const setTime = props.setTime;
   const toDos = props.toDos;
   return (
     <form
       onSubmit={(event) => {
         event.preventDefault();
-        setToDos([
+        const toDosCopy = [
           ...toDos,
           { toDo: toDo, time: time, done: false, editing: false },
-        ]);
+        ];
+
         setToDo("");
         setTime("");
+        props.setNewStateAndLocalStorage(toDosCopy);
       }}
     >
       <input
