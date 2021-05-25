@@ -17,6 +17,7 @@ export function App() {
     if (toDos === null) return [];
     return JSON.parse(toDos);
   }
+  // move state to the top
   // contents of toDo input
   const [toDo, setToDo] = useState("");
   // contents of time input
