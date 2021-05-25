@@ -4,7 +4,6 @@ export function ToDoList(props) {
   const toDos = props.toDos;
   const setToDos = props.setToDos;
 
-  // Unify with unchecked by accepting a third boolean argument called "checked".
   function createCheckedCheckBox(toDo, index) {
     return (
       <input
@@ -88,7 +87,6 @@ export function ToDoList(props) {
       return (
         <div>
           <div
-            // Remove ids? Do you need? Same question for others.
             id={"toDoText-" + index}
             onClick={(event) => {
               const toDosCopy = [...toDos];
@@ -136,7 +134,6 @@ export function ToDoList(props) {
             type="text"
             id={"toDo-Input-" + index}
             onChange={(event) => {
-              // Call the same onChange func for this and the one below.
               const updatedToDos = toDos.map((toDo, index) => {
                 const splitId = event.target.id.split("-");
                 const indexToString = index.toString();
@@ -175,8 +172,6 @@ export function ToDoList(props) {
             value={toDo.time}
           />
           <button
-            // Instead, this should be in a <form>, and this onClick body should be in the form's onSubmit.
-            // Look at how you're handling adding a todo and do the same here.
             onClick={(event) => {
               const toDosCopy = [...toDos];
               toDosCopy.forEach((element, index) => {
