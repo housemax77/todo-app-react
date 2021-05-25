@@ -33,6 +33,10 @@ export function App() {
     return includesSearchContent;
   });
 
+  // const sortedToDos = toDos.sort((toDo) => {
+
+  // });
+
   // I suggest sorting here when sorting is enabled.
   // Store the sorting setting in state, in this component and pass the setSearchSetting function down to Toolbar so toolbar can change the sorting setting.
   // Then you can stop sorting the toDos in state
