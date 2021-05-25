@@ -24,16 +24,12 @@ export function ToolBar(props) {
                 firstElement,
                 secondElement
               ) {
-                // fix var spelling
-                const splitedTimeA = firstElement.time.split(":");
-                const splitedTimeB = secondElement.time.split(":");
-                if (
-                  parseInt(splitedTimeA[0]) - parseInt(splitedTimeB[0]) ===
-                  0
-                ) {
-                  return parseInt(splitedTimeA[1]) - parseInt(splitedTimeB[1]);
+                const splitTimeA = firstElement.time.split(":");
+                const splitTimeB = secondElement.time.split(":");
+                if (parseInt(splitTimeA[0]) - parseInt(splitTimeB[0]) === 0) {
+                  return parseInt(splitTimeA[1]) - parseInt(splitTimeB[1]);
                 } else {
-                  return parseInt(splitedTimeA[0]) - parseInt(splitedTimeB[0]);
+                  return parseInt(splitTimeA[0]) - parseInt(splitTimeB[0]);
                 }
               });
               setSortingText("Sorting By Time");
