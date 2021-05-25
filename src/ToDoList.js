@@ -12,17 +12,7 @@ export function ToDoList(props) {
         id={"checkBox-" + index}
         aria-label={`Did you ${toDo.toDo}?`}
         onChange={(event) => {
-          const updatedToDos = toDos.map((toDo, index) => {
-            const toDoIndex = event.target.id.split("-")[1];
-            if (toDoIndex === index.toString()) {
-              const toDoCopy = { ...toDo };
-              toDoCopy.done = !toDoCopy.done;
-              return toDoCopy;
-            } else {
-              return toDo;
-            }
-          });
-          setToDos(updatedToDos);
+          onBoxCheck(event);
         }}
       />
     );
@@ -36,6 +26,21 @@ export function ToDoList(props) {
     }
   }
 
+  function onBoxCheck(event) {
+    const updatedToDos = toDos.map((toDo, index) => {
+      const toDoIndex = event.target.id.split("-")[1];
+      if (toDoIndex === index.toString()) {
+        const toDoCopy = { ...toDo };
+        toDoCopy.done = !toDoCopy.done;
+        return toDoCopy;
+      } else {
+        return toDo;
+      }
+    });
+    props.setNewStateAndLocalStorage(updatedToDos);
+    setToDos(updatedToDos);
+  }
+
   function createUnCheckedCheckBox(toDo, index) {
     return (
       <input
@@ -43,17 +48,7 @@ export function ToDoList(props) {
         id={"checkBox-" + index}
         aria-label={`Did you ${toDo.toDo}?`}
         onChange={(event) => {
-          const updatedToDos = toDos.map((toDo, index) => {
-            const toDoIndex = event.target.id.split("-")[1];
-            if (toDoIndex === index.toString()) {
-              const toDoCopy = { ...toDo };
-              toDoCopy.done = !toDoCopy.done;
-              return toDoCopy;
-            } else {
-              return toDo;
-            }
-          });
-          setToDos(updatedToDos);
+          onBoxCheck(event);
         }}
       />
     );
@@ -74,7 +69,7 @@ export function ToDoList(props) {
           const filteredToDos = toDos.filter(
             (element, index) => index !== indexForId
           );
-          setToDos(filteredToDos);
+          props.setNewStateAndLocalStorage(filteredToDos);
         }}
       >
         Delete
@@ -186,6 +181,8 @@ export function ToDoList(props) {
                   toDosCopy.time = toDo.time;
                 }
               });
+              const stringifiedToDoList = JSON.stringify(toDosCopy);
+              localStorage.setItem("toDoList", stringifiedToDoList);
               setToDos(toDosCopy);
             }}
             type="submit"

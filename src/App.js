@@ -5,13 +5,26 @@ import { CreateToDo } from "./CreateToDo";
 import { ToolBar } from "./ToolBar";
 
 export function App() {
+  function setNewStateAndLocalStorage(newToDos) {
+    const stringifiedToDoList = JSON.stringify(newToDos);
+    debugger;
+    localStorage.setItem("toDoList", stringifiedToDoList);
+    setToDos(newToDos);
+  }
+
+  function initialToDos() {
+    const toDos = localStorage.getItem("toDoList");
+    if (toDos === null) return [];
+    return JSON.parse(toDos);
+  }
   // contents of toDo input
   const [toDo, setToDo] = useState("");
   // contents of time input
   const [time, setTime] = useState("");
   // the list of todos already entered
-  const [toDos, setToDos] = useState([]);
+  const [toDos, setToDos] = useState(initialToDos());
   const [searchContent, setSearchContent] = useState("");
+
   const filteredToDos = toDos.filter((toDo) => {
     const includesSearchContent = toDo.toDo
       .toLowerCase()
@@ -23,12 +36,12 @@ export function App() {
     <>
       <Header />
       <CreateToDo
+        setNewStateAndLocalStorage={setNewStateAndLocalStorage}
         time={time}
         setTime={setTime}
         toDo={toDo}
         setToDo={setToDo}
         toDos={toDos}
-        setToDos={setToDos}
       />
       <ToolBar
         toDos={toDos}
@@ -36,6 +49,7 @@ export function App() {
         setSearchContent={setSearchContent}
       />
       <ToDoList
+        setNewStateAndLocalStorage={setNewStateAndLocalStorage}
         toDos={filteredToDos}
         setToDo={setToDo}
         setTime={setTime}

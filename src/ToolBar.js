@@ -6,7 +6,7 @@ export function ToolBar(props) {
   return (
     <>
       <div className="dropdown">
-        <button className="dropbtn">Dropdown</button>
+        <button className="dropbtn">Sort</button>
         <div
           aria-label="Sort By Time Or To Do Dropdown"
           className="dropdown-content"

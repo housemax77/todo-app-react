@@ -88,10 +88,14 @@ context("To do app", () => {
 
   it("should support saving changes on page reload", () => {
     addToDos();
-    cy.findByText("17:29").click();
+    cy.findByText("Blahhh at 17:29").click();
     cy.findByLabelText("Enter New Time For 17:29 Here").type("17:22");
+    cy.findByRole("button", { name: "Save Changes" }).click();
     cy.reload();
     cy.findByText("Blahhh at 17:22").should("exist");
+    cy.findByLabelText("Delete Blah To Do?").click();
+    cy.reload();
+    cy.findByText("Blah at 17:30").should("not.exist");
   });
 
   it("should support sorting then editing toDos", () => {
@@ -100,7 +104,6 @@ context("To do app", () => {
     cy.findByLabelText("Did you Blahhh?").should("exist");
     cy.findByText("Blahhh at 17:29").click();
     cy.findByLabelText("Enter New Text For Blahhh Here").type("h");
-    cy.wait(150);
     cy.findByRole("button", { name: "Save Changes" }).click();
     cy.findByText("Blahhhh at 17:29").should("exist");
   });
