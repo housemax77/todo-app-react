@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 
 export function ToolBar(props) {
+  // Suggest moving this state to App so that app can read this setting and sort the todos on each render when sorting is enabled.
+  // Suggest renaming this to sort and supporting 3 potential values: off, todo, or time.
   const [sortingText, setSortingText] = useState("");
   const toDos = props.toDos;
   return (
@@ -14,12 +16,15 @@ export function ToolBar(props) {
           <a
             aria-label="Sort By Time"
             onClick={(event) => {
+              // Suggest sorting "on-the-fly" just like you're filtering "on-the-fly"
+              // So handle like you're handling search: Calculate it on each render.
               if (sortingText === "Sorting By Time") return;
               const toDosCopy = [...toDos];
               const sortedToDos = toDosCopy.sort(function (
                 firstElement,
                 secondElement
               ) {
+                // fix var spelling
                 const splitedTimeA = firstElement.time.split(":");
                 const splitedTimeB = secondElement.time.split(":");
                 if (

@@ -24,6 +24,7 @@ export function CreateToDo(props) {
         placeholder="To Do"
         value={toDo}
         onChange={(event) => setToDo(event.target.value)}
+        // dump className here and on other inputs? Used?
         className="toDo"
       />
       <input

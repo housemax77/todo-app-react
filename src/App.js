@@ -7,7 +7,6 @@ import { ToolBar } from "./ToolBar";
 export function App() {
   function setNewStateAndLocalStorage(newToDos) {
     const stringifiedToDoList = JSON.stringify(newToDos);
-    debugger;
     localStorage.setItem("toDoList", stringifiedToDoList);
     setToDos(newToDos);
   }
@@ -26,12 +25,17 @@ export function App() {
   const [toDos, setToDos] = useState(initialToDos());
   const [searchContent, setSearchContent] = useState("");
 
+  // I suggest treating sorting like this too.
   const filteredToDos = toDos.filter((toDo) => {
     const includesSearchContent = toDo.toDo
       .toLowerCase()
       .includes(searchContent.toLowerCase());
     return includesSearchContent;
   });
+
+  // I suggest sorting here when sorting is enabled.
+  // Store the sorting setting in state, in this component and pass the setSearchSetting function down to Toolbar so toolbar can change the sorting setting.
+  // Then you can stop sorting the toDos in state
 
   return (
     <>
