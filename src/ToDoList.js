@@ -4,26 +4,16 @@ export function ToDoList(props) {
   const toDos = props.toDos;
   const setToDos = props.setToDos;
 
-  function createCheckedCheckBox(toDo, index) {
-    return (
-      <input
-        checked
-        type="checkBox"
-        id={"checkBox-" + index}
-        aria-label={`Did you ${toDo.toDo}?`}
-        onChange={(event) => {
-          onBoxCheck(event);
-        }}
-      />
-    );
-  }
-
   function createCheckBox(toDo, index) {
+    const checkboxProps = {
+      type: "checkBox",
+      id: "checkBox-" + index,
+      onChange: (event) => onBoxCheck(event),
+    };
     if (toDo.done === true) {
-      return createCheckedCheckBox(toDo, index);
-    } else {
-      return createUnCheckedCheckBox(toDo, index);
+      checkboxProps.checked = "Bananna";
     }
+    return <input aria-label={`Did you ${toDo.toDo}?`} {...checkboxProps} />;
   }
 
   function onBoxCheck(event) {
@@ -39,19 +29,6 @@ export function ToDoList(props) {
     });
     props.setNewStateAndLocalStorage(updatedToDos);
     setToDos(updatedToDos);
-  }
-
-  function createUnCheckedCheckBox(toDo, index) {
-    return (
-      <input
-        type="checkBox"
-        id={"checkBox-" + index}
-        aria-label={`Did you ${toDo.toDo}?`}
-        onChange={(event) => {
-          onBoxCheck(event);
-        }}
-      />
-    );
   }
 
   function createDeleteButton(toDo, indexForId) {
@@ -129,73 +106,71 @@ export function ToDoList(props) {
   function toDoInput(toDo, index) {
     return (
       <>
-        <div>
-          <input
-            type="text"
-            id={"toDo-Input-" + index}
-            onChange={(event) => {
-              const updatedToDos = toDos.map((toDo, index) => {
-                const splitId = event.target.id.split("-");
-                const indexToString = index.toString();
-                if (splitId[2] === indexToString) {
-                  const toDoCopy = { ...toDo };
-                  toDoCopy.toDo = event.target.value;
-                  return toDoCopy;
-                } else {
-                  return toDo;
-                }
-              });
-              setToDos(updatedToDos);
-            }}
-            aria-label={`Enter New Text For ${toDo.toDo} Here`}
-            value={toDo.toDo}
-          />
-          at
-          <input
-            type="time"
-            id={"time-Input-" + index}
-            onChange={(event) => {
-              const updatedToDos = toDos.map((time, index) => {
-                const splitId = event.target.id.split("-");
-                const indexToString = index.toString();
-                if (splitId[2] === indexToString) {
-                  const timeCopy = { ...time };
-                  timeCopy.time = event.target.value;
-                  return timeCopy;
-                } else {
-                  return time;
-                }
-              });
-              setToDos(updatedToDos);
-            }}
-            aria-label={`Enter New Time For ${toDo.time} Here`}
-            value={toDo.time}
-          />
-          <button
-            onClick={(event) => {
-              const toDosCopy = [...toDos];
-              toDosCopy.forEach((element, index) => {
-                element.editing = false;
-                if (element.toDo !== toDo.toDo || element.time !== toDo.time) {
-                  toDosCopy.toDo = toDo.toDo;
-                  toDosCopy.time = toDo.time;
-                }
-              });
-              const stringifiedToDoList = JSON.stringify(toDosCopy);
-              localStorage.setItem("toDoList", stringifiedToDoList);
-              setToDos(toDosCopy);
-            }}
-            type="submit"
-          >
-            {" "}
-            Save Changes{" "}
-          </button>
-        </div>
-        {createCheckBox(toDo, index)}
-        {createDeleteButton(toDo, index)}
+        <form
+          onSubmit={(event) => {
+            const toDosCopy = [...toDos];
+            toDosCopy.forEach((element, index) => {
+              element.editing = false;
+              if (element.toDo !== toDo.toDo || element.time !== toDo.time) {
+                toDosCopy.toDo = toDo.toDo;
+                toDosCopy.time = toDo.time;
+              }
+            });
+            const stringifiedToDoList = JSON.stringify(toDosCopy);
+            localStorage.setItem("toDoList", stringifiedToDoList);
+            setToDos(toDosCopy);
+          }}
+        >
+          <div>
+            <input
+              type="text"
+              id={"toDo-Input-" + index}
+              onChange={(event) => {
+                inputEdited(event, "toDo");
+              }}
+              aria-label={`Enter New Text For ${toDo.toDo} Here`}
+              value={toDo.toDo}
+            />
+            at
+            <input
+              type="time"
+              id={"time-Input-" + index}
+              onChange={(event) => {
+                inputEdited(event, "time");
+              }}
+              aria-label={`Enter New Time For ${toDo.time} Here`}
+              value={toDo.time}
+            />
+            <button type="submit"> Save Changes </button>
+          </div>
+          {createCheckBox(toDo, index)}
+          {createDeleteButton(toDo, index)}
+        </form>
       </>
     );
   }
+
+  function inputEdited(event, inputName) {
+    const updatedToDos = toDos.map((toDo, index) => {
+      const splitId = event.target.id.split("-");
+      const indexToString = index.toString();
+      if (splitId[2] === indexToString) {
+        const toDoCopy = { ...toDo };
+        const toDoOrTime = inputName;
+        debugger;
+        if (toDoOrTime === "toDo") {
+          toDoCopy.toDo = event.target.value;
+        } else if (toDoOrTime === "time") {
+          toDoCopy.time = event.target.value;
+        }
+        return toDoCopy;
+      } else {
+        return toDo;
+      }
+    });
+    setToDos(updatedToDos);
+  }
+
   return (
     <ol className="List">
       {toDos.map((toDo, index) => {

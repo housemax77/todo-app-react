@@ -5,6 +5,16 @@ import { CreateToDo } from "./CreateToDo";
 import { ToolBar } from "./ToolBar";
 
 export function App() {
+  const [sortingBy, setSortingBy] = useState(localStorage.getItem("sortBy"));
+  // move state to the top
+  // contents of toDo input
+  const [toDo, setToDo] = useState("");
+  // contents of time input
+  const [time, setTime] = useState("");
+  // the list of todos already entered
+  const [toDos, setToDos] = useState(initialToDos());
+  const [searchContent, setSearchContent] = useState("");
+
   function setNewStateAndLocalStorage(newToDos) {
     const stringifiedToDoList = JSON.stringify(newToDos);
     localStorage.setItem("toDoList", stringifiedToDoList);
@@ -16,14 +26,6 @@ export function App() {
     if (toDos === null) return [];
     return JSON.parse(toDos);
   }
-  // move state to the top
-  // contents of toDo input
-  const [toDo, setToDo] = useState("");
-  // contents of time input
-  const [time, setTime] = useState("");
-  // the list of todos already entered
-  const [toDos, setToDos] = useState(initialToDos());
-  const [searchContent, setSearchContent] = useState("");
 
   // I suggest treating sorting like this too.
   const filteredToDos = toDos.filter((toDo) => {
@@ -33,9 +35,33 @@ export function App() {
     return includesSearchContent;
   });
 
-  // I suggest sorting here when sorting is enabled.
-  // Store the sorting setting in state, in this component and pass the setSearchSetting function down to Toolbar so toolbar can change the sorting setting.
-  // Then you can stop sorting the toDos in state
+  // Copy toDos, then store a sorted copy in a variable NOT STATE
+  const sortedToDos = filteredToDos.sort(function (
+    firstElement,
+    secondElement
+  ) {
+    if (sortingBy === "Don't Sort") return;
+    else if (sortingBy === "Sort By Time") {
+      const splitTimeA = firstElement.time.split(":");
+      const splitTimeB = secondElement.time.split(":");
+      if (parseInt(splitTimeA[0]) - parseInt(splitTimeB[0]) === 0) {
+        return parseInt(splitTimeA[1]) - parseInt(splitTimeB[1]);
+      } else {
+        return parseInt(splitTimeA[0]) - parseInt(splitTimeB[0]);
+      }
+    } else if (sortingBy === "Sort Alphabetically") {
+      var listOfToDos = [];
+      const toDosCopy = [...toDos];
+      toDosCopy.forEach((toDo) => {
+        listOfToDos.push(toDo.toDo);
+      });
+      listOfToDos.sort();
+      toDosCopy.map((toDo, index) => {
+        toDo.toDo = listOfToDos[index];
+      });
+      return toDosCopy;
+    }
+  });
 
   return (
     <>
@@ -49,13 +75,15 @@ export function App() {
         toDos={toDos}
       />
       <ToolBar
+        sortingBy={sortingBy}
+        setSortingBy={setSortingBy}
         toDos={toDos}
         setToDos={setToDos}
         setSearchContent={setSearchContent}
       />
       <ToDoList
         setNewStateAndLocalStorage={setNewStateAndLocalStorage}
-        toDos={filteredToDos}
+        toDos={sortedToDos}
         setToDo={setToDo}
         setTime={setTime}
         setToDos={setToDos}
