@@ -27,7 +27,7 @@ context("To do app", () => {
 
   it("should support sorting alphabetically", () => {
     addToDo("Bla", "17:20");
-    cy.findByLabelText("Sort Alphabeticlly").click({ force: true });
+    cy.findByLabelText("Sort Alphabetically").click({ force: true });
     cy.findByLabelText("Did you Bla?").should("exist");
   });
 
