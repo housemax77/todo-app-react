@@ -64,7 +64,6 @@ export function ToDoList(props) {
       return (
         <div>
           <div
-            // Remove ids? Do you need? Same question for others.
             id={"toDoText-" + index}
             onClick={(event) => {
               const toDosCopy = [...toDos];
