@@ -5,6 +5,16 @@ import { CreateToDo } from "./CreateToDo";
 import { ToolBar } from "./ToolBar";
 
 export function App() {
+  const [sortingBy, setSortingBy] = useState(localStorage.getItem("sortBy"));
+  // move state to the top
+  // contents of toDo input
+  const [toDo, setToDo] = useState("");
+  // contents of time input
+  const [time, setTime] = useState("");
+  // the list of todos already entered
+  const [toDos, setToDos] = useState(initialToDos());
+  const [searchContent, setSearchContent] = useState("");
+
   function setNewStateAndLocalStorage(newToDos) {
     const stringifiedToDoList = JSON.stringify(newToDos);
     localStorage.setItem("toDoList", stringifiedToDoList);
@@ -16,14 +26,6 @@ export function App() {
     if (toDos === null) return [];
     return JSON.parse(toDos);
   }
-  // move state to the top
-  // contents of toDo input
-  const [toDo, setToDo] = useState("");
-  // contents of time input
-  const [time, setTime] = useState("");
-  // the list of todos already entered
-  const [toDos, setToDos] = useState(initialToDos());
-  const [searchContent, setSearchContent] = useState("");
 
   // I suggest treating sorting like this too.
   const filteredToDos = toDos.filter((toDo) => {
