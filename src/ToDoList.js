@@ -4,27 +4,16 @@ export function ToDoList(props) {
   const toDos = props.toDos;
   const setToDos = props.setToDos;
 
-  // Unify with unchecked by accepting a third boolean argument called "checked". If check is present it will check
-  function createCheckedCheckBox(toDo, index) {
-    return (
-      <input
-        checked
-        type="checkBox"
-        id={"checkBox-" + index}
-        aria-label={`Did you ${toDo.toDo}?`}
-        onChange={(event) => {
-          onBoxCheck(event);
-        }}
-      />
-    );
-  }
-
   function createCheckBox(toDo, index) {
+    const checkboxProps = {
+      type: "checkBox",
+      id: "checkBox-" + index,
+      onChange: (event) => onBoxCheck(event),
+    };
     if (toDo.done === true) {
-      return createCheckedCheckBox(toDo, index);
-    } else {
-      return createUnCheckedCheckBox(toDo, index);
+      checkboxProps.checked = "Bananna";
     }
+    return <input aria-label={`Did you ${toDo.toDo}?`} {...checkboxProps} />;
   }
 
   function onBoxCheck(event) {
@@ -40,19 +29,6 @@ export function ToDoList(props) {
     });
     props.setNewStateAndLocalStorage(updatedToDos);
     setToDos(updatedToDos);
-  }
-
-  function createUnCheckedCheckBox(toDo, index) {
-    return (
-      <input
-        type="checkBox"
-        id={"checkBox-" + index}
-        aria-label={`Did you ${toDo.toDo}?`}
-        onChange={(event) => {
-          onBoxCheck(event);
-        }}
-      />
-    );
   }
 
   function createDeleteButton(toDo, indexForId) {
